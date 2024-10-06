@@ -1,12 +1,48 @@
 ﻿<Window x:Class="ProgressBarDemo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProgressBarDemo"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        
+        Title="ProgressBar DEMO" 
+        
+        Height="225" Width="300"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="MainWindowStyles.xaml"/>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <StackPanel>
+        <Grid>
+            <ProgressBar x:Name="ProgressBar"
+                         Minimum="{Binding ElementName=InputBegin, Path=Text}"
+                         Maximum="{Binding ElementName=InputEnd, Path=Text}"
+                         Value="{Binding Value}"/>
+            <TextBlock Text="{Binding ElementName=ProgressBar, Path=Value}"/>
+        </Grid>
+        
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Начальное значение"
+                   Target="InputBegin"/>
+            <TextBox x:Name="InputBegin"
+                     Text="{Binding Begin}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Конечное значение"
+                   Target="InputEnd"/>
+            <TextBox x:Name="InputEnd"
+                     Text="{Binding End}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Старт"
+                    Style="{StaticResource StyleButtonStart}"
+                    Command="{Binding CommandStart}"/>
+            <Button Content="Стоп"
+                    Style="{StaticResource StyleButtonStop}"
+                    Command="{Binding CommandStop}"/>
+        </StackPanel>
+    </StackPanel>
 </Window>
